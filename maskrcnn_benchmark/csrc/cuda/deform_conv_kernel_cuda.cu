@@ -62,6 +62,7 @@
 
 
 #include <ATen/ATen.h>
+#include <ATen/ceil_div.h>
 #include <THC/THCAtomics.cuh>
 #include <stdio.h>
 #include <math.h>

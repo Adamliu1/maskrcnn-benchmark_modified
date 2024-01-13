@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <algorithm>
+#include <ATen/ceil_div.h>
 
 using namespace at;
 

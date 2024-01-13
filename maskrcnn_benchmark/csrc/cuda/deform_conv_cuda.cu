@@ -3,8 +3,13 @@
 
 #include <ATen/ATen.h>
 #include <ATen/cuda/CUDAContext.h>
+#include <ATen/ceil_div.h>
 
-#include <THC/THC.h>
+#ifndef AT_CHECK
+#define AT_CHECK TORCH_CHECK 
+#endif
+
+// #include <THC/THC.h>
 #include <THC/THCDeviceUtils.cuh>
 
 #include <vector>

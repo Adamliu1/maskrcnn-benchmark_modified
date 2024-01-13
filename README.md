@@ -1,3 +1,51 @@
+# Modification made
+
+## Note on Nvidia Apex
+The modification made here is to allow building from source with cuda 11.6 and PyTorch 1.13.1
+
+You should follow the original installation guidance excpet for the Nvidia/Apex part.
+
+According to [Issue](https://github.com/NVIDIA/apex/issues/1735) (still open by 12.Jan.2024). The recent commit breaks the installation by producing an error:
+```
+csrc/update_scale_hysteresis.cu(62): error: class "at::Tensor" has no member "const_data_ptr"
+```
+
+The fix is to use a previous commit:
+```
+git checkout 2386a912164b0c5cfcd8be7a2b890fbac5607c82
+pip install -v --disable-pip-version-check --no-cache-dir --no-build-isolation --config-settings "--build-option=--cpp_ext" --config-settings "--build-option=--cuda_ext" ./
+```
+
+## Note on Nvidia Cuda Libraries
+You might meet erros like below:
+```
+    6 | #include <cusparse.h>
+      |          ^~~~~~~~~~~~
+compilation terminated.
+```
+To fix this, we can use conda to install [libcusparse](https://anaconda.org/nvidia/libcusparse)
+```
+conda install nvidia/label/cuda-11.6.0::libcusparse-dev # I use cuda 11.6
+```
+
+Simillarly with ``cusolver``
+To fix, just simply execute
+```
+conda install nvidia/label/cuda-11.6.0::libcusolver-dev
+```
+
+## Reference
+- [fatal error: THC/THC.h: No such file or directory
+#1332](https://github.com/open-mmlab/mmdetection3d/issues/1332#issuecomment-1085991179)
+
+- [Question about THC\THC.h](https://discuss.pytorch.org/t/question-about-thc-thc-h/147145/12)
+
+- [Maskrcnn/Faster-rcnn依赖项安装过程中THC.h: No such file or directory/THCeilDiv Undefined/分配内存空间等问题的解决方案](https://blog.csdn.net/code_zhao/article/details/129172817)
+
+- [instalal error cuda10 pytorch 1.1](https://github.com/NVIDIA/apex/issues/425#issuecomment-520388822)
+
+- [Hi, this project won't compile because of AT_CHECK](https://github.com/mrlooi/rotated_maskrcnn/issues/31#issuecomment-631416601)
+
 # Faster R-CNN and Mask R-CNN in PyTorch 1.0
 
 **maskrcnn-benchmark has been deprecated. Please see [detectron2](https://github.com/facebookresearch/detectron2), which includes implementations for all models in maskrcnn-benchmark**
